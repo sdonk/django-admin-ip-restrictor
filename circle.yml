@@ -4,7 +4,7 @@ dependencies:
     override:
         - "tox --notest"
     pre:
-        - pip install tox
+        - pip install tox codecov
         - pyenv versions
         - pyenv local 2.7.12 3.4.4 3.5.3 3.6.2
 
@@ -13,4 +13,5 @@ test:
         - tox
 
     post:
-        - bash <(curl -s https://codecov.io/bash)
+        - tox -e coverage-report
+        - codecov
