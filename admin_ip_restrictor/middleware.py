@@ -1,4 +1,9 @@
-class AdminIPRestrictor(object):
+import ipaddress
+
+from ipware.ip import get_real_ip
+
+
+class AdminIPRestrictorMiddleware(object):
 
     def __init__(self, get_response=None):
         self.get_response = get_response
@@ -12,4 +17,5 @@ class AdminIPRestrictor(object):
         return response
 
     def process_request(self, request):
+        ip = get_real_ip(request)
         return None

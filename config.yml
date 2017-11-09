@@ -1,0 +1,13 @@
+dependencies:
+    cache_directories:
+        - ".tox"
+    override:
+        - "tox --notest"
+    pre:
+        - pip install tox
+        - pyenv versions
+        - pyenv 2.7.12 3.3.6 3.4.4 3.5.3 3.6.2
+
+test:
+    override:
+        - tox
