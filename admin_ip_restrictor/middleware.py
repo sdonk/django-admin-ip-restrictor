@@ -1,5 +1,9 @@
 import ipaddress
 
+try:
+    from django.urls import resolve
+except ImportError:
+    from django.core.urlresolvers import resolve
 from ipware.ip import get_real_ip
 
 
@@ -18,4 +22,5 @@ class AdminIPRestrictorMiddleware(object):
 
     def process_request(self, request):
         ip = get_real_ip(request)
+        app_name = resolve(request.path).app_name
         return None
