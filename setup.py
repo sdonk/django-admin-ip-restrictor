@@ -18,6 +18,7 @@ test_requires = [
     'pytest==3.2.3',
     'pytest-cov==2.5.1',
     'pytest-django==3.1.2',
+    'pytest-sugar==0.9.0',
     'tox==2.9.1',
 ]
 
@@ -47,7 +48,6 @@ setup(
         'License :: OSI Approved :: MIT License',
         'Operating System :: OS Independent',
         'Programming Language :: Python',
-        'Programming Language :: Python :: 2.7',
         'Programming Language :: Python :: 3.4',
         'Programming Language :: Python :: 3.5',
         'Programming Language :: Python :: 3.6',

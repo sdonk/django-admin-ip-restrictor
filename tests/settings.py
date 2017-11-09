@@ -39,7 +39,7 @@ if DJANGO_VERSION < (1, 10):
         'django.contrib.sessions.middleware.SessionMiddleware',
         'django.contrib.auth.middleware.AuthenticationMiddleware',
         'django.contrib.messages.middleware.MessageMiddleware',
-        'admin_ip_restrictor.AdminIPRestrictorMiddleware'
+        'admin_ip_restrictor.middleware.AdminIPRestrictorMiddleware'
     ]
 else:
     MIDDLEWARE = [
