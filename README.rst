@@ -10,7 +10,11 @@ Django Admin IP Restrictor
 .. image:: https://img.shields.io/pypi/v/django-admin-ip-restrictor.svg
     :target: https://pypi.python.org/pypi/django-admin-ip-restrictor
 
+.. image:: https://img.shields.io/pypi/pyversions/django-admin-ip-restrictor.svg
+    :target: https://pypi.python.org/pypi/django-admin-ip-restrictor
+
 .. image:: https://img.shields.io/pypi/l/django-admin-ip-restrictor.svg
+    :target: https://pypi.python.org/pypi/django-admin-ip-restrictor
 
 A Django middleware to restrict the access to the Django admin based on incoming IPs
 
