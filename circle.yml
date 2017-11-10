@@ -1,8 +1,7 @@
-machine:
-  python:
-    version: 2.7.12 3.4.4 3.5.3 3.6.2
-
 test:
+    pre:
+        - pyenv local 2.7.12 3.4.4 3.5.3 3.6.2
+
     post:
         - tox -e coverage-report
         - codecov
