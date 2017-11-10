@@ -1,5 +1,5 @@
 release: clean
-	pip install twine wheel
+	pip install twine
 	rm -rf dist/*
 	python setup.py sdist bdist_wheel
-	twine upload -s dist/*
+	twine upload dist/*
