@@ -14,3 +14,36 @@ Requirements
 
 * Python >= 3.4
 * Django >= 1.9
+
+Usage
+-----
+
+First install the package::
+
+    $ pip install django-admin-ip-restrictor
+
+Then add the middleware to your settings::
+
+    # Django 1.9
+    MIDDLEWARE_CLASSES = [
+        ...
+        'admin_ip_restrictor.middleware.AdminIPRestrictorMiddleware'
+    ]
+
+    # Django 1.10+
+    MIDDLEWARE = [
+        ...
+        'admin_ip_restrictor.middleware.AdminIPRestrictorMiddleware'
+    ]
+
+Use these settings to control who has access to the admin::
+
+    RESTRICT_ADMIN=True
+    ALLOWED_ADMIN_IPS=[]
+    ALLOWED_ADMIN_IP_RANGES[]
+
+
+Contribute
+----------
+
+Fork the project and submit a PR!
