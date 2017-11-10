@@ -14,6 +14,7 @@ Requirements
 
 * Python >= 3.4
 * Django >= 1.9
+* django-ipware==1.1.6
 
 Usage
 -----
