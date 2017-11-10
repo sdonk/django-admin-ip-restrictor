@@ -30,7 +30,7 @@ setup(
     license='MIT License',
     description='A Django middleware to restrict incoming IPs to admin panel',
     long_description=long_description,
-    url='',
+    url='https://github.com/sdonk/django-admin-ip-restrictor/',
     author='Alessandro De Noia',
     author_email='alessandro.denoia@gmail.com',
     install_requires=install_requires,
