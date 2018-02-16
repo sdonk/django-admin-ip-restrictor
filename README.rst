@@ -34,24 +34,47 @@ First install the package::
 
 Then add the middleware to your settings::
 
-    # Django 1.9
-    MIDDLEWARE_CLASSES = [
-        ...
-        'admin_ip_restrictor.middleware.AdminIPRestrictorMiddleware'
-    ]
-
     # Django 1.10+
     MIDDLEWARE = [
         ...
         'admin_ip_restrictor.middleware.AdminIPRestrictorMiddleware'
     ]
 
+    # Django 1.9 and older
+    MIDDLEWARE_CLASSES = [
+        ...
+        'admin_ip_restrictor.middleware.AdminIPRestrictorMiddleware'
+    ]
+
+
 Use these settings to control who has access to the admin::
 
     RESTRICT_ADMIN=True
+    RESTRICT_URLS=['^extra/admin-url/*']
     ALLOWED_ADMIN_IPS=[]
     ALLOWED_ADMIN_IP_RANGES[]
 
+
+Examples
+--------
+
+Restrict access to the wagtail admin and django admin
+
+    RESTRICT_ADMIN=True
+    RESTRICT_URLS=['^admin/*']
+
+Wagtails default is to put its admin at /admin and djangos at /django-admin
+
+RESTRICT_ADMIN doesn't care what the django admin url is to restrict it.
+wagtails admin at /admin isn't recognised so it is added to RESTRICT_URLS
+
+
+Restrict arbitrary urls
+
+    RESTRICT_ADMIN=False
+    RESTRICT_URLS=['^intranet/*']
+
+You can restrict urls while leaving admin open.
 
 Contribute
 ----------
