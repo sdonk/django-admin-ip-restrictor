@@ -1,11 +1,11 @@
 Django Admin IP Restrictor
 ==========================
 
-.. image:: https://circleci.com/gh/sdonk/django-admin-ip-restrictor/tree/master.svg?style=shield
-    :target: https://circleci.com/gh/sdonk/django-admin-ip-restrictor/tree/master
+.. image:: https://circleci.com/gh/uktrade/django-admin-ip-restrictor/tree/master.svg?style=shield
+    :target: https://circleci.com/gh/uktrade/django-admin-ip-restrictor/tree/master
 
-.. image:: https://codecov.io/gh/sdonk/django-admin-ip-restrictor/branch/master/graph/badge.svg
-    :target: https://codecov.io/gh/sdonk/django-admin-ip-restrictor
+.. image:: https://codecov.io/gh/uktrade/django-admin-ip-restrictor/branch/master/graph/badge.svg
+    :target: https://codecov.io/gh/uktrade/django-admin-ip-restrictor
 
 .. image:: https://img.shields.io/pypi/v/django-admin-ip-restrictor.svg
     :target: https://pypi.python.org/pypi/django-admin-ip-restrictor
@@ -24,6 +24,7 @@ Requirements
 * Python >= 3.4
 * Django >= 1.9
 * django-ipware==1.1.6
+
 
 Usage
 -----
@@ -50,8 +51,30 @@ Use these settings to control who has access to the admin::
 
     RESTRICT_ADMIN=True
     ALLOWED_ADMIN_IPS=[]
-    ALLOWED_ADMIN_IP_RANGES[]
+    ALLOWED_ADMIN_IP_RANGES=[]
 
+
+Run tests
+---------
+
+Install `tox` and `pyenv`::
+
+    $ pip install tox pyenv
+
+
+Install Python versions in `pyenv`::
+
+    $ pyenv install 3.4.4
+    $ pyenv install 3.5.3
+    $ pyenv install 3.6.2
+
+Specify the Python versions you want to test with::
+
+    $ pyenv local 3.4.4 3.5.3 3.6.2
+
+Run tests::
+
+    $ tox
 
 Contribute
 ----------
