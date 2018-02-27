@@ -40,7 +40,7 @@ Then add the middleware to your settings::
         'admin_ip_restrictor.middleware.AdminIPRestrictorMiddleware'
     ]
 
-    # Django 1.9 and older
+    # Django 1.9
     MIDDLEWARE_CLASSES = [
         ...
         'admin_ip_restrictor.middleware.AdminIPRestrictorMiddleware'
