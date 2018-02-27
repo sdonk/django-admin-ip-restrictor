@@ -50,7 +50,29 @@ Use these settings to control who has access to the admin::
 
     RESTRICT_ADMIN=True
     ALLOWED_ADMIN_IPS=[]
-    ALLOWED_ADMIN_IP_RANGES[]
+    ALLOWED_ADMIN_IP_RANGES=[]
+
+Run tests
+---------
+
+Install `tox` and `pyenv`::
+
+    $ pip install tox pyenv
+
+
+Install Python versions in `pyenv`::
+
+    $ pyenv install 3.4.4
+    $ pyenv install 3.5.3
+    $ pyenv install 3.6.2
+
+Specify the Python versions you want to test with::
+
+    $ pyenv local 3.4.4 3.5.3 3.6.2
+
+Run tests::
+
+    $ tox
 
 
 Contribute
