@@ -1,8 +1,10 @@
 import ipaddress
+import re
 
 from django.conf import settings
 from django.http import Http404
 from ipware.ip import get_ip, get_real_ip
+from urllib.parse import urlparse
 
 try:
     from django.urls import resolve
@@ -19,6 +21,16 @@ class AdminIPRestrictorMiddleware(object):
             'RESTRICT_ADMIN',
             False
         )
+        restrict_urls = getattr(
+            settings,
+            'RESTRICT_URLS',
+            []
+        )
+        if restrict_urls:
+            self.url_re = \
+                re.compile('|'.join(restrict_urls))
+        else:
+            self.url_re = None
         self.allowed_admin_ips = getattr(
             settings,
             'ALLOWED_ADMIN_IPS',
@@ -51,13 +63,20 @@ class AdminIPRestrictorMiddleware(object):
 
         return blocked
 
+    def is_restricted_url(self, url):
+        """ Determine if a URL matches any of the restricted urls"""
+        if self.url_re is not None:
+            return bool(self.url_re.match(urlparse(url).path[1:]))
+
     def process_request(self, request):
         ip = get_real_ip(request) or get_ip(request)
         is_admin_app = resolve(request.path).app_name == 'admin'
-        conditions = (is_admin_app, self.restrict_admin, self.is_blocked(ip))
+        if is_admin_app:
+            conditions = (is_admin_app, self.restrict_admin, self.is_blocked(ip))
+        else:
+            conditions = (self.is_restricted_url(request.get_raw_uri()), self.is_blocked(ip))
 
         if all(conditions):
             raise Http404()
 
         return None
-
