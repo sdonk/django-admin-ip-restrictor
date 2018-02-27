@@ -1,3 +1,7 @@
+dependencies:
+    pre:
+        - pip install codecov
+
 test:
     pre:
         - pyenv local 3.4.4 3.5.3 3.6.2
