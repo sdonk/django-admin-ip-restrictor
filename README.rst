@@ -34,14 +34,14 @@ First install the package::
 
 Then add the middleware to your settings::
 
-    # Django 1.9
-    MIDDLEWARE_CLASSES = [
+    # Django 1.10+
+    MIDDLEWARE = [
         ...
         'admin_ip_restrictor.middleware.AdminIPRestrictorMiddleware'
     ]
 
-    # Django 1.10+
-    MIDDLEWARE = [
+    # Django 1.9
+    MIDDLEWARE_CLASSES = [
         ...
         'admin_ip_restrictor.middleware.AdminIPRestrictorMiddleware'
     ]
