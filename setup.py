@@ -32,7 +32,7 @@ setup(
     long_description=long_description,
     url='https://github.com/sdonk/django-admin-ip-restrictor/',
     author='Alessandro De Noia',
-    author_email='alessandro.denoia@gmail.com',
+    author_email='alessandro.denoia@digital.trade.gov.uk',
     install_requires=install_requires,
     extras_require={
         'tests': test_requires,
