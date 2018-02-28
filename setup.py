@@ -39,6 +39,7 @@ setup(
     },
     classifiers=[
         'Environment :: Web Environment',
+        'Development Status :: 4 - Beta',
         'Framework :: Django',
         'Framework :: Django :: 1.9',
         'Framework :: Django :: 1.10',
