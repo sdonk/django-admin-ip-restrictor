@@ -58,7 +58,9 @@ jobs:
       - checkout
       - run:
           name: Push to PYPI
-          command: make publish
+          command: |
+          pip install twine wheel
+          make publish
 
 
 workflows:
