@@ -5,7 +5,7 @@ clean:
 	find . -type f -name "*.pyc" -delete
 	rm -rf coverage.xml .coverage.* *.egg-info dist .cache
 
-release: clean
-	pip install twine
-	python setup.py sdist bdist_wheel
-	twine upload dist/*
+publish:
+	rm -rf build dist; \
+	python setup.py bdist_wheel; \
+	twine upload --username $$PYPI_USERNAME --password $$PYPI_PASSWORD dist/*
