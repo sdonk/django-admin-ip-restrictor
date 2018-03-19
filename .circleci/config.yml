@@ -65,7 +65,7 @@ jobs:
 
 workflows:
   version: 2
-  build_dev:
+  tests:
     jobs:
       - build
       - flake8
@@ -74,7 +74,7 @@ workflows:
     jobs:
       - deploy:
           requires:
-            - build
+            - tests
           filters:
             branches:
               only: master
