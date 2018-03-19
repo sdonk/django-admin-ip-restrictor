@@ -7,9 +7,15 @@ jobs:
     steps:
       - checkout
 
+      - restore_cache:
+          key: tox-{{ .Branch }}-{{ checksum "tox.ini" }}
       - run:
           name: Run tests
           command: tox
+      - save_cache:
+          key: tox-{{ .Branch }}-{{ checksum "tox.ini" }}
+          paths:
+            - ".tox"
 
       - run:
           name: Coverage
@@ -26,7 +32,7 @@ jobs:
       - checkout
 
       - restore_cache:
-          key: deps1-{{ .Branch }}-{{ checksum "requirements_flake8.txt" }}
+          key: venv-{{ .Branch }}-{{ checksum "requirements_flake8.txt" }}
       - run:
           name: Install Python dependencies
           command: |
@@ -34,7 +40,7 @@ jobs:
             . venv/bin/activate
             pip install -r requirements_flake8.txt
       - save_cache:
-          key: deps1-{{ .Branch }}-{{ checksum "requirements_flake8.txt" }}
+          key: venv-{{ .Branch }}-{{ checksum "requirements_flake8.txt" }}
           paths:
             - "venv"
 
@@ -57,15 +63,14 @@ jobs:
 
 workflows:
   version: 2
-  build_and_deploy:
+  build_dev:
     jobs:
       - build
       - flake8
       - deploy:
-        requires:
-          - build
-          - flake8
-        filters:
-          branches:
-            only:
-              - master
+          requires:
+            - build
+            - flake8
+          filters:
+            branches:
+              only: master
