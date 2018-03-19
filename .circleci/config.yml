@@ -14,6 +14,7 @@ jobs:
       - run:
           name: Coverage
           command: |
+            pip install codecov
             tox -e coverage-report
             codecov
 
