@@ -19,15 +19,21 @@ class AdminIPRestrictorMiddleware(object):
             'RESTRICT_ADMIN',
             False
         )
-        self.allowed_admin_ips = getattr(
+        allowed_admin_ips = getattr(
             settings,
             'ALLOWED_ADMIN_IPS',
             []
         )
-        self.allowed_admin_ip_ranges = getattr(
+        self.allowed_admin_ips = self.parse_envars(
+            allowed_admin_ips
+        )
+        allowed_admin_ip_ranges = getattr(
             settings,
             'ALLOWED_ADMIN_IP_RANGES',
             []
+        )
+        self.allowed_admin_ip_ranges = self.parse_envars(
+            allowed_admin_ip_ranges
         )
 
     def __call__(self, request):
@@ -37,6 +43,13 @@ class AdminIPRestrictorMiddleware(object):
             response = self.get_response(request)
 
         return response
+
+    @staticmethod
+    def parse_envars(value):
+        if type(value) == list:
+            return value
+        else:
+            return value.split(',')
 
     def is_blocked(self, ip):
         """Determine if an IP address should be considered blocked."""
