@@ -60,4 +60,3 @@ class AdminIPRestrictorMiddleware(object):
             raise Http404()
 
         return None
-
