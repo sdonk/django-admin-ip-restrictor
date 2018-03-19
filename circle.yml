@@ -1,6 +1,6 @@
 dependencies:
     pre:
-        - pip install codecov
+        - pip install codecov twine wheel
 
 test:
     pre:
@@ -9,3 +9,9 @@ test:
     post:
         - tox -e coverage-report
         - codecov
+
+deployment:
+  build_package:
+    branch: master
+    commands:
+      - make publish

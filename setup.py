@@ -25,7 +25,7 @@ test_requires = [
 setup(
     name='django-admin-ip-restrictor',
     version=__version__,
-    packages=find_packages(),
+    packages=find_packages(exclude=["tests.*", "tests", ".tox"]),
     include_package_data=True,
     license='MIT License',
     description='A Django middleware to restrict incoming IPs to admin panel',
@@ -38,6 +38,7 @@ setup(
         'tests': test_requires,
     },
     classifiers=[
+        'Development Status :: 5 - Production/Stable',
         'Environment :: Web Environment',
         'Framework :: Django',
         'Framework :: Django :: 1.9',
@@ -52,7 +53,6 @@ setup(
         'Programming Language :: Python :: 3.4',
         'Programming Language :: Python :: 3.5',
         'Programming Language :: Python :: 3.6',
-        'Topic :: Internet :: WWW/HTTP',
-        'Topic :: Internet :: WWW/HTTP :: Dynamic Content',
+        'Topic :: Software Development :: Libraries :: Python Modules',
     ],
 )
