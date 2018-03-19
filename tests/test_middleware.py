@@ -143,7 +143,7 @@ def test_admin_restricted_allowed_ips(header, incoming_ip, expected, settings):
 )
 def test_admin_restricted_blocked_ips(header, incoming_ip, expected, settings):
     settings.RESTRICT_ADMIN = True
-    settings.ALLOWED_ADMIN_IPS = ['127.0.0.2', '::2']
+    settings.ALLOWED_ADMIN_IPS = '127.0.0.2,::2'
     admin_url = reverse_lazy('admin:login')
     client = Client(*{header: incoming_ip})
     response = client.get(admin_url)
