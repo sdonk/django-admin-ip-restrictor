@@ -61,16 +61,10 @@ workflows:
     jobs:
       - build
       - flake8
-
-  build_master_and_deploy:
-    jobs:
-    - build
-    - flake8
-    - deploy:
-        requires:
-          - build
-          - flake8
-    filters:
-      branches:
-        only:
-          - master
+      - deploy:
+          requires:
+            - build
+            - flake8
+          filters:
+            branches:
+              only: master
