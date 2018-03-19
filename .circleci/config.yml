@@ -9,13 +9,14 @@ jobs:
 
       - run:
           name: Run tests
-          command: tox -e coverage-report
+          command: tox
 
       - run:
           name: Coverage
           command: |
-            sudo pip install codecov
+            tox -e coverage-report
             codecov
+
   flake8:
     docker:
       - image: circleci/python:3-stretch
