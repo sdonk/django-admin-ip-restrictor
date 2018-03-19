@@ -15,7 +15,7 @@ jobs:
       - save_cache:
           key: tox-{{ .Branch }}-{{ checksum "tox.ini" }}
           paths:
-            - ".tox"
+            - "/root/project/.tox"
 
       - run:
           name: Coverage
@@ -67,10 +67,12 @@ workflows:
     jobs:
       - build
       - flake8
+
+  deploy:
+    jobs:
       - deploy:
           requires:
             - build
-            - flake8
           filters:
             branches:
               only: master
