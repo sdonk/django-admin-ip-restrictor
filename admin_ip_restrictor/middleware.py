@@ -2,7 +2,7 @@ import ipaddress
 
 from django.conf import settings
 from django.http import Http404
-from ipware.ip import get_ip, get_real_ip
+from ipware.ip2 import get_client_ip
 
 try:
     from django.urls import resolve
@@ -14,17 +14,20 @@ class AdminIPRestrictorMiddleware(object):
 
     def __init__(self, get_response=None):
         self.get_response = get_response
-        self.restrict_admin = getattr(
+        restrict_admin = getattr(
             settings,
             'RESTRICT_ADMIN',
             False
+        )
+        self.restrict_admin = self.parse_bool_envars(
+            restrict_admin
         )
         allowed_admin_ips = getattr(
             settings,
             'ALLOWED_ADMIN_IPS',
             []
         )
-        self.allowed_admin_ips = self.parse_envars(
+        self.allowed_admin_ips = self.parse_list_envars(
             allowed_admin_ips
         )
         allowed_admin_ip_ranges = getattr(
@@ -32,7 +35,7 @@ class AdminIPRestrictorMiddleware(object):
             'ALLOWED_ADMIN_IP_RANGES',
             []
         )
-        self.allowed_admin_ip_ranges = self.parse_envars(
+        self.allowed_admin_ip_ranges = self.parse_list_envars(
             allowed_admin_ip_ranges
         )
 
@@ -45,7 +48,13 @@ class AdminIPRestrictorMiddleware(object):
         return response
 
     @staticmethod
-    def parse_envars(value):
+    def parse_bool_envars(value):
+        if value in ('true', 'True', '1', 1):
+            return True
+        return False
+
+    @staticmethod
+    def parse_list_envars(value):
         if type(value) == list:
             return value
         else:
@@ -64,8 +73,14 @@ class AdminIPRestrictorMiddleware(object):
 
         return blocked
 
+    def get_ip(self, request):
+        client_ip, is_routable = get_client_ip(request)
+        assert client_ip, 'IP not found'
+        assert is_routable, 'IP is private'
+        return client_ip
+
     def process_request(self, request):
-        ip = get_real_ip(request) or get_ip(request)
+        ip = self.get_ip(request)
         is_admin_app = resolve(request.path).app_name == 'admin'
         conditions = (is_admin_app, self.restrict_admin, self.is_blocked(ip))
 

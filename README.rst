@@ -35,24 +35,34 @@ First install the package::
 
 Then add the middleware to your settings::
 
-    # Django 1.9
-    MIDDLEWARE_CLASSES = [
-        ...
-        'admin_ip_restrictor.middleware.AdminIPRestrictorMiddleware'
-    ]
-
     # Django 1.10+
     MIDDLEWARE = [
         ...
         'admin_ip_restrictor.middleware.AdminIPRestrictorMiddleware'
     ]
 
-Use these settings to control who has access to the admin::
+    # Django 1.9
+    MIDDLEWARE_CLASSES = [
+        ...
+        'admin_ip_restrictor.middleware.AdminIPRestrictorMiddleware'
+    ]
+
+Set these variables in your `settings.py` to control who has access to the admin (IPV4 and IPV6 can be mixed)::
 
     RESTRICT_ADMIN=True
-    ALLOWED_ADMIN_IPS=[]
-    ALLOWED_ADMIN_IP_RANGES=[]
+    ALLOWED_ADMIN_IPS=['127.0.0.1', '::1']
+    ALLOWED_ADMIN_IP_RANGES=['127.0.0.0/24', '::/1']
 
+
+If using environment variables make sure that the variables receive the right type of value.
+`django-admin-ip-restrictor` automatically converts the following formats::
+
+    $ export RESTRICT_ADMIN='true'
+    $ export ALLOWED_ADMIN_IPS='127.0.0.1,::1'
+    $ export ALLOWED_ADMIN_IP_RANGES='127.0.0.0/24,::/1'
+
+
+For `RESTRICT_ADMIN` also these values can be used: `True`, `1`, `false`, `False`, `0`
 
 Run tests
 ---------
