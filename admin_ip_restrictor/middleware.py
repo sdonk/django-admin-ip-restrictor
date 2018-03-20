@@ -14,17 +14,20 @@ class AdminIPRestrictorMiddleware(object):
 
     def __init__(self, get_response=None):
         self.get_response = get_response
-        self.restrict_admin = getattr(
+        restrict_admin = getattr(
             settings,
             'RESTRICT_ADMIN',
             False
+        )
+        self.restrict_admin = self.parse_bool_envars(
+            restrict_admin
         )
         allowed_admin_ips = getattr(
             settings,
             'ALLOWED_ADMIN_IPS',
             []
         )
-        self.allowed_admin_ips = self.parse_envars(
+        self.allowed_admin_ips = self.parse_list_envars(
             allowed_admin_ips
         )
         allowed_admin_ip_ranges = getattr(
@@ -32,7 +35,7 @@ class AdminIPRestrictorMiddleware(object):
             'ALLOWED_ADMIN_IP_RANGES',
             []
         )
-        self.allowed_admin_ip_ranges = self.parse_envars(
+        self.allowed_admin_ip_ranges = self.parse_list_envars(
             allowed_admin_ip_ranges
         )
 
@@ -45,7 +48,15 @@ class AdminIPRestrictorMiddleware(object):
         return response
 
     @staticmethod
-    def parse_envars(value):
+    def parse_bool_envars(value):
+        if value in ('true', 'True', '1', 1):
+            return True
+        elif value in ('false', 'False', '0', 0):
+            return False
+        return False
+
+    @staticmethod
+    def parse_list_envars(value):
         if type(value) == list:
             return value
         else:

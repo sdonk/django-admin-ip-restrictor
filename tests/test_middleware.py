@@ -298,3 +298,47 @@ def test_client_ip_private(header, incoming_ip):
     with pytest.raises(Exception) as e:
         client.get(admin_url, **{header: incoming_ip})
     assert 'IP is private' in str(e.value)
+
+
+@pytest.mark.parametrize(
+    'envar, expected',
+    (
+        ('127.0.0.1', ['127.0.0.1']),
+        ('127.0.0.1,127.0.0.2', ['127.0.0.1', '127.0.0.2']),
+    ),
+    ids=[
+        'single entry string',
+        'comma separated multiple entry string',
+    ]
+)
+def test_list_envars_parsing(envar, expected):
+    from admin_ip_restrictor.middleware import AdminIPRestrictorMiddleware
+    assert AdminIPRestrictorMiddleware.parse_list_envars(envar) == expected
+
+
+@pytest.mark.parametrize(
+    'envar, expected',
+    (
+        ('True', True),
+        ('true', True),
+        ('1', True),
+        (1, True),
+        ('false', False),
+        ('False', False),
+        ('0', False),
+        (0, False)
+    ),
+    ids=[
+        'True',
+        'true',
+        '1',
+        '1 number',
+        'false',
+        'False',
+        '0',
+        '0 number'
+    ]
+)
+def test_bool_envars_parsing(envar, expected):
+    from admin_ip_restrictor.middleware import AdminIPRestrictorMiddleware
+    assert AdminIPRestrictorMiddleware.parse_bool_envars(envar) == expected
