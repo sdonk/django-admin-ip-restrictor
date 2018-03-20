@@ -6,6 +6,9 @@ test:
     pre:
         - pyenv local 3.4.4 3.5.3 3.6.2
 
+    override:
+        - tox
+
     post:
         - tox -e coverage-report
         - codecov
