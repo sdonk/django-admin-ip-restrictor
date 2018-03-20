@@ -22,7 +22,6 @@ jobs:
           command: |
             pip install codecov
             tox -e coverage-report
-            codecov
 
   flake8:
     docker:
