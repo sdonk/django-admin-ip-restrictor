@@ -51,8 +51,6 @@ class AdminIPRestrictorMiddleware(object):
     def parse_bool_envars(value):
         if value in ('true', 'True', '1', 1):
             return True
-        elif value in ('false', 'False', '0', 0):
-            return False
         return False
 
     @staticmethod
@@ -77,13 +75,9 @@ class AdminIPRestrictorMiddleware(object):
 
     def get_ip(self, request):
         client_ip, is_routable = get_client_ip(request)
-        if client_ip is None:
-            raise Exception('IP not found')
-        else:
-            if is_routable:
-                return client_ip
-            else:
-                raise Exception('IP is private')
+        assert client_ip, 'IP not found'
+        assert is_routable, 'IP is private'
+        return client_ip
 
     def process_request(self, request):
         ip = self.get_ip(request)

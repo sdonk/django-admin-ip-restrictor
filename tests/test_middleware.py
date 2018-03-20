@@ -323,8 +323,8 @@ def test_list_envars_parsing(envar, expected):
         ('true', True),
         ('1', True),
         (1, True),
-        ('false', False),
-        ('False', False),
+        ('bla', False),
+        ('foo', False),
         ('0', False),
         (0, False)
     ),
