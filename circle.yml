@@ -12,3 +12,9 @@ test:
     post:
         - tox -e coverage-report
         - codecov
+
+deployment:
+  build_package:
+    branch: master
+    commands:
+      - make publish
