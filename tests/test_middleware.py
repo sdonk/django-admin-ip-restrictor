@@ -270,7 +270,8 @@ def test_admin_restricted_blocked_ip_ranges(header, incoming_ip, expected,
 
 
 @mock.patch('admin_ip_restrictor.middleware.get_client_ip')
-def test_client_ip_not_found(mocked_get_client_ip):
+def test_client_ip_not_found(mocked_get_client_ip, settings):
+    settings.RESTRICT_ADMIN = True
     mocked_get_client_ip.return_value = None, None
 
     admin_url = reverse_lazy('admin:login')
@@ -291,8 +292,8 @@ def test_client_ip_not_found(mocked_get_client_ip):
         'Private IPV6'
     ]
 )
-def test_client_ip_private(header, incoming_ip):
-
+def test_client_ip_private(header, incoming_ip, settings):
+    settings.RESTRICT_ADMIN = True
     admin_url = reverse_lazy('admin:login')
     client = Client()
     with pytest.raises(Exception) as e:
