@@ -1,0 +1,20 @@
+dependencies:
+    pre:
+        - pip install codecov twine wheel
+
+test:
+    pre:
+        - pyenv local 3.4.4 3.5.3 3.6.2
+
+    override:
+        - tox
+
+    post:
+        - tox -e coverage-report
+        - codecov
+
+deployment:
+  build_package:
+    branch: master
+    commands:
+      - make publish
