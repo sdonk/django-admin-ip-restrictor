@@ -22,7 +22,6 @@ jobs:
           command: |
             pip install codecov
             tox -e coverage-report
-            codecov
 
   flake8:
     docker:
@@ -59,7 +58,7 @@ jobs:
       - run:
           name: Push to PYPI
           command: |
-            pip install twine wheel
+            sudo pip install twine wheel
             make publish
 
 
@@ -72,6 +71,7 @@ workflows:
       - deploy:
           requires:
             - build
+            - flake8
           filters:
             branches:
               only: master

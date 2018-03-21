@@ -1,5 +1,5 @@
 test:
-	py.test
+	tox
 
 clean:
 	find . -type f -name "*.pyc" -delete

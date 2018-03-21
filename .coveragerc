@@ -1,3 +1,3 @@
 [run]
 source = admin_ip_restrictor
-omit = .tox/*
+omit = .tox/*,.circleci/*
