@@ -10,7 +10,7 @@ with open(os.path.join(PROJECT_DIR, 'README.rst')) as readme:
 
 install_requires = [
     'django>=1.9,<1.12',
-    'django-ipware==1.1.6'
+    'django-ipware>=2,<3'
 ]
 
 test_requires = [
@@ -32,7 +32,7 @@ setup(
     long_description=long_description,
     url='https://github.com/sdonk/django-admin-ip-restrictor/',
     author='Alessandro De Noia',
-    author_email='alessandro.denoia@gmail.com',
+    author_email='alessandro.denoia@digital.trade.gov.uk',
     install_requires=install_requires,
     extras_require={
         'tests': test_requires,
@@ -40,6 +40,7 @@ setup(
     classifiers=[
         'Development Status :: 5 - Production/Stable',
         'Environment :: Web Environment',
+        'Development Status :: 4 - Beta',
         'Framework :: Django',
         'Framework :: Django :: 1.9',
         'Framework :: Django :: 1.10',

@@ -1,11 +1,11 @@
 Django Admin IP Restrictor
 ==========================
 
-.. image:: https://circleci.com/gh/sdonk/django-admin-ip-restrictor/tree/master.svg?style=shield
-    :target: https://circleci.com/gh/sdonk/django-admin-ip-restrictor/tree/master
+.. image:: https://circleci.com/gh/uktrade/django-admin-ip-restrictor/tree/master.svg?style=shield
+    :target: https://circleci.com/gh/uktrade/django-admin-ip-restrictor/tree/master
 
-.. image:: https://codecov.io/gh/sdonk/django-admin-ip-restrictor/branch/master/graph/badge.svg
-    :target: https://codecov.io/gh/sdonk/django-admin-ip-restrictor
+.. image:: https://codecov.io/gh/uktrade/django-admin-ip-restrictor/branch/master/graph/badge.svg
+    :target: https://codecov.io/gh/uktrade/django-admin-ip-restrictor
 
 .. image:: https://img.shields.io/pypi/v/django-admin-ip-restrictor.svg
     :target: https://pypi.python.org/pypi/django-admin-ip-restrictor
@@ -23,7 +23,8 @@ Requirements
 
 * Python >= 3.4
 * Django >= 1.9
-* django-ipware==1.1.6
+* django-ipware=>2,<3
+
 
 Usage
 -----
@@ -84,7 +85,6 @@ Specify the Python versions you want to test with::
 Run tests::
 
     $ tox
-
 
 Contribute
 ----------

@@ -2,7 +2,7 @@ import ipaddress
 
 from django.conf import settings
 from django.http import Http404
-from ipware.ip import get_ip, get_real_ip
+from ipware.ip2 import get_client_ip
 
 try:
     from django.urls import resolve
@@ -51,8 +51,6 @@ class AdminIPRestrictorMiddleware(object):
     def parse_bool_envars(value):
         if value in ('true', 'True', '1', 1):
             return True
-        elif value in ('false', 'False', '0', 0):
-            return False
         return False
 
     @staticmethod
@@ -75,8 +73,14 @@ class AdminIPRestrictorMiddleware(object):
 
         return blocked
 
+    def get_ip(self, request):
+        client_ip, is_routable = get_client_ip(request)
+        assert client_ip, 'IP not found'
+        assert is_routable, 'IP is private'
+        return client_ip
+
     def process_request(self, request):
-        ip = get_real_ip(request) or get_ip(request)
+        ip = self.get_ip(request)
         is_admin_app = resolve(request.path).app_name == 'admin'
         conditions = (is_admin_app, self.restrict_admin, self.is_blocked(ip))
 
