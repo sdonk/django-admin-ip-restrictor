@@ -7,5 +7,6 @@ clean:
 
 publish: clean
 	rm -rf build dist; \
-	python3 setup.py bdist_wheel; \
+	pip install twine wheel;\
+	python setup.py bdist_wheel; \
 	twine upload --username $$PYPI_USERNAME --password $$PYPI_PASSWORD dist/*
