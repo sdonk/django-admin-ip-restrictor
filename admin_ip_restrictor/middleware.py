@@ -80,11 +80,12 @@ class AdminIPRestrictorMiddleware(object):
         return client_ip
 
     def process_request(self, request):
-        ip = self.get_ip(request)
-        is_admin_app = resolve(request.path).app_name == 'admin'
-        conditions = (is_admin_app, self.restrict_admin, self.is_blocked(ip))
+        if self.restrict_admin:
+            ip = self.get_ip(request)
+            is_admin_app = resolve(request.path).app_name == 'admin'
+            conditions = (is_admin_app, self.is_blocked(ip))
 
-        if all(conditions):
-            raise Http404()
+            if all(conditions):
+                raise Http404()
 
         return None
