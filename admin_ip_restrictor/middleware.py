@@ -38,6 +38,15 @@ class AdminIPRestrictorMiddleware(object):
         self.allowed_admin_ip_ranges = self.parse_list_envars(
             allowed_admin_ip_ranges
         )
+        restricted_app_names = getattr(
+            settings,
+            'RESTRICTED_APP_NAMES',
+            []
+        )
+        self.restricted_app_names = self.parse_list_envars(
+            restricted_app_names
+        )
+        self.restricted_app_names.append('admin')
 
     def __call__(self, request):
         response = self.process_request(request)
@@ -82,8 +91,9 @@ class AdminIPRestrictorMiddleware(object):
     def process_request(self, request):
         if self.restrict_admin:
             ip = self.get_ip(request)
-            is_admin_app = resolve(request.path).app_name == 'admin'
-            conditions = (is_admin_app, self.is_blocked(ip))
+            app_name = resolve(request.path).app_name
+            is_restricted_app = app_name in self.restricted_app_names
+            conditions = (is_restricted_app, self.is_blocked(ip))
 
             if all(conditions):
                 raise Http404()
