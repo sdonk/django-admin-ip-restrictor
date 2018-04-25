@@ -1,7 +1,10 @@
 from unittest import mock
 
 import pytest
-from django.core.urlresolvers import reverse_lazy
+try:
+    from django.core.urlresolvers import reverse_lazy
+except ImportError:
+    from django.urls import reverse_lazy
 from django.test.client import Client
 
 
