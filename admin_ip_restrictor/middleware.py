@@ -1,16 +1,12 @@
 import ipaddress
+from ipware.ip2 import get_client_ip
 
 from django.conf import settings
 from django.http import Http404
-from ipware.ip2 import get_client_ip
-
-try:
-    from django.urls import resolve
-except ImportError:  # pragma: no cover
-    from django.core.urlresolvers import resolve
+from django.utils.deprecation import MiddlewareMixin
 
 
-class AdminIPRestrictorMiddleware(object):
+class AdminIPRestrictorMiddleware(MiddlewareMixin):
 
     def __init__(self, get_response=None):
         self.get_response = get_response
@@ -48,14 +44,6 @@ class AdminIPRestrictorMiddleware(object):
         )
         self.restricted_app_names.append('admin')
 
-    def __call__(self, request):
-        response = self.process_request(request)
-
-        if not response and self.get_response:
-            response = self.get_response(request)
-
-        return response
-
     @staticmethod
     def parse_bool_envars(value):
         if value in ('true', 'True', '1', 1):
@@ -88,10 +76,10 @@ class AdminIPRestrictorMiddleware(object):
         assert is_routable, 'IP is private'
         return client_ip
 
-    def process_request(self, request):
+    def process_view(self, request, view_func, view_args, view_kwargs):
         if self.restrict_admin:
             ip = self.get_ip(request)
-            app_name = resolve(request.path).app_name
+            app_name = request.resolver_match.app_name
             is_restricted_app = app_name in self.restricted_app_names
             conditions = (is_restricted_app, self.is_blocked(ip))
 
