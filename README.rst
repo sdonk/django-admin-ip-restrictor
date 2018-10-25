@@ -22,7 +22,7 @@ Requirements
 ------------
 
 * Python >= 3.4
-* Django >= 1.9
+* Django >= 1.10
 * django-ipware=>2,<3
 
 
@@ -37,12 +37,6 @@ Then add the middleware to your settings::
 
     # Django 1.10+
     MIDDLEWARE = [
-        ...
-        'admin_ip_restrictor.middleware.AdminIPRestrictorMiddleware'
-    ]
-
-    # Django 1.9
-    MIDDLEWARE_CLASSES = [
         ...
         'admin_ip_restrictor.middleware.AdminIPRestrictorMiddleware'
     ]
