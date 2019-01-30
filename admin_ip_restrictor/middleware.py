@@ -77,13 +77,10 @@ class AdminIPRestrictorMiddleware(MiddlewareMixin):
         return client_ip
 
     def process_view(self, request, view_func, view_args, view_kwargs):
-        if self.restrict_admin:
+        app_name = request.resolver_match.app_name
+        is_restricted_app = app_name in self.restricted_app_names
+        if self.restrict_admin and is_restricted_app:
             ip = self.get_ip(request)
-            app_name = request.resolver_match.app_name
-            is_restricted_app = app_name in self.restricted_app_names
-            conditions = (is_restricted_app, self.is_blocked(ip))
-
-            if all(conditions):
+            if self.is_blocked(ip):
                 raise Http404()
-
         return None
