@@ -8,12 +8,21 @@ from django.utils.deprecation import MiddlewareMixin
 
 class AdminIPRestrictorMiddleware(MiddlewareMixin):
 
+
     def __init__(self, get_response=None):
         self.get_response = get_response
         restrict_admin = getattr(
             settings,
             'RESTRICT_ADMIN',
             False
+        )
+        trust_private_ip = getattr(
+            settings,
+            'TRUST_PRIVATE_IP',
+            False
+        )
+        self.trust_private_ip = self.parse_bool_envars(
+            trust_private_ip
         )
         self.restrict_admin = self.parse_bool_envars(
             restrict_admin
@@ -61,6 +70,10 @@ class AdminIPRestrictorMiddleware(MiddlewareMixin):
         """Determine if an IP address should be considered blocked."""
         blocked = True
 
+        if self.trust_private_ip:
+            if ipaddress.ip_address(ip).is_private:
+                blocked = False
+
         if ip in self.allowed_admin_ips:
             blocked = False
 
@@ -73,17 +86,17 @@ class AdminIPRestrictorMiddleware(MiddlewareMixin):
     def get_ip(self, request):
         client_ip, is_routable = get_client_ip(request)
         assert client_ip, 'IP not found'
-        assert is_routable, 'IP is private'
+        if not self.trust_private_ip:
+            assert is_routable, 'IP is private'
         return client_ip
 
     def process_view(self, request, view_func, view_args, view_kwargs):
-        if self.restrict_admin:
-            ip = self.get_ip(request)
-            app_name = request.resolver_match.app_name
-            is_restricted_app = app_name in self.restricted_app_names
-            conditions = (is_restricted_app, self.is_blocked(ip))
+        app_name = request.resolver_match.app_name
+        is_restricted_app = app_name in self.restricted_app_names
 
-            if all(conditions):
+        if self.restrict_admin and is_restricted_app:
+            ip = self.get_ip(request)
+            if self.is_blocked(ip):
                 raise Http404()
 
         return None

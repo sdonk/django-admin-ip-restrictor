@@ -4,7 +4,6 @@ try:
     from django.core.urlresolvers import reverse_lazy
 except ImportError:
     from django.urls import reverse_lazy
-from django.test.client import Client
 
 
 @pytest.mark.parametrize(
@@ -34,10 +33,9 @@ from django.test.client import Client
         'REMOTE_ADDR allow'
     ]
 )
-def test_admin_no_restriction(header, incoming_ip, expected, settings):
+def test_admin_no_restriction(header, incoming_ip, expected, settings, client):
     settings.RESTRICT_ADMIN = False
     admin_url = reverse_lazy('admin:login')
-    client = Client()
     response = client.get(admin_url, **{header: incoming_ip})
     assert response.status_code == expected
 
@@ -89,11 +87,10 @@ def test_admin_no_restriction(header, incoming_ip, expected, settings):
         'REMOTE_ADDR ipv6 allow',
     ]
 )
-def test_admin_restricted_allowed_ips(header, incoming_ip, expected, settings):
+def test_admin_restricted_allowed_ips(header, incoming_ip, expected, settings, client):
     settings.RESTRICT_ADMIN = True
     settings.ALLOWED_ADMIN_IPS = ['74.125.224.72', '0:0:0:0:0:ffff:4a7d:e048']
     admin_url = reverse_lazy('admin:login')
-    client = Client()
     response = client.get(admin_url, **{header: incoming_ip})
     assert response.status_code == expected
 
@@ -145,11 +142,10 @@ def test_admin_restricted_allowed_ips(header, incoming_ip, expected, settings):
         'REMOTE_ADDR ipv6 block'
     ]
 )
-def test_admin_restricted_blocked_ips(header, incoming_ip, expected, settings):
+def test_admin_restricted_blocked_ips(header, incoming_ip, expected, settings, client):
     settings.RESTRICT_ADMIN = True
     settings.ALLOWED_ADMIN_IPS = ['8.8.8.9', '0:0:0:0:0:ffff:4a7d:e04b']
     admin_url = reverse_lazy('admin:login')
-    client = Client()
     response = client.get(admin_url, **{header: incoming_ip})
     assert response.status_code == expected
 
@@ -202,14 +198,13 @@ def test_admin_restricted_blocked_ips(header, incoming_ip, expected, settings):
     ]
 )
 def test_admin_restricted_allowed_ip_ranges(header, incoming_ip, expected,
-                                            settings):
+                                            settings, client):
     settings.RESTRICT_ADMIN = True
     settings.ALLOWED_ADMIN_IP_RANGES = [
         '74.125.224.72/32',
         '0:0:0:0:0:ffff:4a7d:e048/128'
     ]
     admin_url = reverse_lazy('admin:login')
-    client = Client()
     response = client.get(admin_url, **{header: incoming_ip})
     assert response.status_code == expected
 
@@ -262,25 +257,36 @@ def test_admin_restricted_allowed_ip_ranges(header, incoming_ip, expected,
     ]
 )
 def test_admin_restricted_blocked_ip_ranges(header, incoming_ip, expected,
-                                            settings):
+                                            settings, client):
     settings.RESTRICT_ADMIN = True
     settings.ALLOWED_ADMIN_IPS = ['192.168.0.0/24', '0:0:0:0:0:ffff:4a7d:e04b']
     admin_url = reverse_lazy('admin:login')
-    client = Client()
     response = client.get(admin_url, **{header: incoming_ip})
     assert response.status_code == expected
 
 
 @mock.patch('admin_ip_restrictor.middleware.get_client_ip')
-def test_client_ip_not_found(mocked_get_client_ip, settings):
+def test_client_ip_not_found(mocked_get_client_ip, settings, client):
     settings.RESTRICT_ADMIN = True
     mocked_get_client_ip.return_value = None, None
 
     admin_url = reverse_lazy('admin:login')
-    client = Client()
     with pytest.raises(Exception) as e:
         client.get(admin_url)
     assert 'IP not found' in str(e.value)
+
+
+@mock.patch('admin_ip_restrictor.middleware.get_client_ip')
+def test_ip_not_foud_unrestricted_app(mocked_get_client_ip, settings, client):
+    settings.RESTRICT_ADMIN = True
+    settings.RESTRICTED_APP_NAMES = ['foo']
+    mocked_get_client_ip.return_value = None, None
+
+    admin_url = reverse_lazy('not-admin:home')
+
+    response = client.get(admin_url)
+
+    assert response.status_code == 200
 
 
 @pytest.mark.parametrize(
@@ -294,13 +300,33 @@ def test_client_ip_not_found(mocked_get_client_ip, settings):
         'Private IPV6'
     ]
 )
-def test_client_ip_private(header, incoming_ip, settings):
+def test_client_ip_private(header, incoming_ip, settings, client):
     settings.RESTRICT_ADMIN = True
     admin_url = reverse_lazy('admin:login')
-    client = Client()
     with pytest.raises(Exception) as e:
         client.get(admin_url, **{header: incoming_ip})
     assert 'IP is private' in str(e.value)
+
+
+@pytest.mark.parametrize(
+    'header, incoming_ip',
+    (
+        ('HTTP_X_FORWARDED_FOR', '127.0.0.1'),
+        ('HTTP_X_FORWARDED_FOR', 'fc00:'),
+    ),
+    ids=[
+        'Private IPV4',
+        'Private IPV6'
+    ]
+)
+def test_client_trust_ip_private(header, incoming_ip, settings, client):
+    settings.RESTRICT_ADMIN = True
+    settings.TRUST_PRIVATE_IP = True
+    admin_url = reverse_lazy('admin:login')
+
+    response = client.get(admin_url, **{header: incoming_ip})
+
+    assert response.status_code == 200
 
 
 @pytest.mark.parametrize(
