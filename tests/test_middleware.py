@@ -1,5 +1,4 @@
 from unittest import mock
-
 import pytest
 try:
     from django.core.urlresolvers import reverse_lazy
