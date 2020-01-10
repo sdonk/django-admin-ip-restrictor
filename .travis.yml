@@ -37,9 +37,6 @@ matrix:
   - python: '3.8'
     env: DJANGO=2.2
   - python: '3.7'
-    script:
-      - tox -e coverage-report
-      - codecov
     deploy:
       provider: pypi
       user: __token__
@@ -53,3 +50,9 @@ install:
 
 script:
 - tox
+
+after_success:
+- tox -e coverage-support
+
+notifications:
+    email: false
