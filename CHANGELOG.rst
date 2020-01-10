@@ -1,7 +1,12 @@
 `Release history`_
 ##################
 
-2.1.0 - 10-01-2019
+2.1.1 - 10-01-2020
+==================
+* Fix Travis CI deployment to PyPi
+
+
+2.1.0 - 10-01-2020
 ==================
 * Add TRUST_PRIVATE_IP settings (default: `False`)
 
