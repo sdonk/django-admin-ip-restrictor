@@ -11,32 +11,46 @@ jobs:
     name: 'Python 3.5 Django 2.0'
   - python: '3.5'
     env: DJANGO=2.0
+    name: 'Python 3.5 Django 2.1'
   - python: '3.5'
     env: DJANGO=2.1
+    name: 'Python 3.5 Django 2.2'
   - python: '3.5'
     env: DJANGO=2.2
+    name: 'Python 3.6 Django 1.11'
   - python: '3.6'
     env: DJANGO=1.11
+    name: 'Python 3.6 Django 2.0'
   - python: '3.6'
     env: DJANGO=2.0
+    name: 'Python 3.6 Django 2.1'
   - python: '3.6'
     env: DJANGO=2.1
+    name: 'Python 3.6 Django 2.2'
   - python: '3.6'
     env: DJANGO=2.2
+    name: 'Python 3.7 Django 1.11'
   - python: '3.7'
     env: DJANGO=1.11
+    name: 'Python 3.7 Django 2.0'
   - python: '3.7'
     env: DJANGO=2.0
+    name: 'Python 3.7 Django 2.1'
   - python: '3.7'
     env: DJANGO=2.1
+    name: 'Python 3.7 Django 2.2'
   - python: '3.7'
     env: DJANGO=2.2
+    name: 'Python 3.8 Django 1.11'
   - python: '3.8'
     env: DJANGO=1.11
+    name: 'Python 3.8 Django 2.0'
   - python: '3.8'
     env: DJANGO=2.0
+    name: 'Python 3.8 Django 2.1'
   - python: '3.8'
     env: DJANGO=2.1
+    name: 'Python 3.8 Django 2.2'
   - python: '3.8'
     env: DJANGO=2.2
   - stage: 'Coverage'
