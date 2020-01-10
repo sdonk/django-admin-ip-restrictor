@@ -46,7 +46,7 @@ Set these variables in your `settings.py` to control who has access to the admin
     ALLOWED_ADMIN_IPS=['127.0.0.1', '::1']
     ALLOWED_ADMIN_IP_RANGES=['127.0.0.0/24', '::/1']
     RESTRICTED_APP_NAMES=['admin']
-
+    TRUST_PRIVATE_IP=True
 
 Use `RESTRICTED_APP_NAMES` to restrict the access to more apps. Admin app is always included.
 
@@ -60,6 +60,8 @@ If using environment variables make sure that the variables receive the right ty
 
 
 For `RESTRICT_ADMIN` also these values can be used: `True`, `1`, `false`, `False`, `0`
+
+Use `TRUST_PRIVATE_IP` to skip checking IP addresses from a trusted private network.
 
 Changelog
 ---------
