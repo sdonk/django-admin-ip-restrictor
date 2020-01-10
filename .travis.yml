@@ -1,0 +1,57 @@
+language: python
+cache: pip
+dist: bionic
+matrix:
+  fast_finish: true
+  include:
+  - python: '3.5'
+    env: DJANGO=1.11
+  - python: '3.5'
+    env: DJANGO=2.0
+  - python: '3.5'
+    env: DJANGO=2.1
+  - python: '3.5'
+    env: DJANGO=2.2
+  - python: '3.6'
+    env: DJANGO=1.11
+  - python: '3.6'
+    env: DJANGO=2.0
+  - python: '3.6'
+    env: DJANGO=2.1
+  - python: '3.6'
+    env: DJANGO=2.2
+  - python: '3.7'
+    env: DJANGO=1.11
+  - python: '3.7'
+    env: DJANGO=2.0
+  - python: '3.7'
+    env: DJANGO=2.1
+  - python: '3.7'
+    env: DJANGO=2.2
+  - python: '3.8'
+    env: DJANGO=1.11
+  - python: '3.8'
+    env: DJANGO=2.0
+  - python: '3.8'
+    env: DJANGO=2.1
+  - python: '3.8'
+    env: DJANGO=2.2
+
+install:
+- pip install tox tox-venv tox-travis
+
+script:
+- tox
+
+after_success:
+- pip install codecov
+- tox -e coverage-support
+
+
+deploy:
+  provider: pypi
+  user: __token__
+  password:
+    secure: eFSLFNELkrNapEZC99gg/Bi0iBlPuxi+Rz9cGeaFXn3rQi5liDx8/0nqPkvu33XM87rGkymg1CSaWkN+fA2K8wW8xWW0kBUopEMH0wJLaIJg4PAV+CH1w+iKnNYCWHaWzWT+v90k/fIsAZdVliANo40XguvZQzWTULfh3gFtqj+XUaUyD/9WsqJ4uWxoGGrB+HD3AXS1H7wfqsh3lVBIXPHyJtZrbqryS6hXtfuJrgCKXBVyPpk+CHfGtvJbYmieguXf0CRIk6jpyF7mZyHM+wOrDGv+Ow7pc1T0Vb6U51woMKsExvpDPpLOw5n8eHpqAccmY+w2vVWrRhOenICC8QY69zzDh/5tJuA+Nvw18EK5bxhEzUQMhZOkME1k5cHeFK1+eOMjON6fNeQ4tgBTQe6zq0w3h+GVdsbrumas/t1ecwm5fovuET/GTifb7pfJJd9eplFqG83RIk2XFUjxivAN7q4Eh6F7C+Ua8iQuC7PhFoyp/X5vzGZ2LWu4i7XPAHYfpU5gFgwZMiwt8WbknkYYJf1r/TtsfS4ZsZtIfYylKfkYmeQWj7UkZfAmvSomInEDimen3sRDa8kGrfzx85vprCyRiSO13gBbYa6jSsFMwWoYu9iXvqPt6n+zqKVyyb/cT759sARDkb3bU8fZPpO5uaKcrEwz/Wi7N8MmhQo=
+  on:
+    branch: master
