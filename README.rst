@@ -1,8 +1,8 @@
 Django Admin IP Restrictor
 ==========================
 
-.. image:: https://circleci.com/gh/uktrade/django-admin-ip-restrictor/tree/master.svg?style=shield
-    :target: https://circleci.com/gh/uktrade/django-admin-ip-restrictor/tree/master
+.. image:: https://travis-ci.org/sdonk/django-admin-ip-restrictor.svg?branch=master
+    :target: https://travis-ci.org/sdonk/django-admin-ip-restrictor
 
 .. image:: https://codecov.io/gh/uktrade/django-admin-ip-restrictor/branch/master/graph/badge.svg
     :target: https://codecov.io/gh/uktrade/django-admin-ip-restrictor
@@ -60,6 +60,10 @@ If using environment variables make sure that the variables receive the right ty
 
 
 For `RESTRICT_ADMIN` also these values can be used: `True`, `1`, `false`, `False`, `0`
+
+Changelog
+---------
+Full changelog at https://github.com/sdonk/django-admin-ip-restrictor/blob/master/CHANGELOG.rst
 
 Run tests
 ---------
