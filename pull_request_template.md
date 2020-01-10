@@ -1,0 +1,2 @@
+ - [ ] Changelog entry added
+ - [ ] Version number updated
