@@ -4,8 +4,11 @@ dist: bionic
 jobs:
   fast_finish: true
   include:
+  - stage: 'Test'
+    name: 'Python 3.5 Django 1.11'
   - python: '3.5'
     env: DJANGO=1.11
+    name: 'Python 3.5 Django 2.0'
   - python: '3.5'
     env: DJANGO=2.0
   - python: '3.5'
@@ -36,6 +39,12 @@ jobs:
     env: DJANGO=2.1
   - python: '3.8'
     env: DJANGO=2.2
+  - stage: 'Coverage'
+  - python: '3.7'
+    script:
+      - pytest . --cov
+      - codecov
+  - stage: 'Deploy'
   - python: '3.7'
     if: branch = master
     deploy:
@@ -50,8 +59,9 @@ install:
 script:
 - tox
 
-after_success:
-- tox -e coverage-report
+#branches:
+#  only:
+#  - master
 
 notifications:
     email: false
