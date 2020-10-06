@@ -1,5 +1,9 @@
 import ipaddress
-from ipware.ip2 import get_client_ip
+
+try:
+    from ipware.ip2 import get_client_ip
+except ImportError:
+    from ipware.ip import get_client_ip
 
 from django.conf import settings
 from django.http import Http404
