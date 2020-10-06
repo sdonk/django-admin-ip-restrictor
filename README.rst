@@ -22,9 +22,10 @@ Requirements
 ------------
 
 * Python >= 3.5
-* Django >= 1.11,<3
-* django-ipware=>2,<3
+* Django >= 1.11,<4
+* django-ipware=>2,<4
 
+Note that Django 3 has dropped support for Python 3.5
 
 Usage
 -----
@@ -79,14 +80,14 @@ Install `pyenv`, use https://github.com/pyenv/pyenv#installation as reference.
 
 Install Python versions in `pyenv`::
 
-    $ pyenv install 3.5.9
-    $ pyenv install 3.6.10
-    $ pyenv install 3.7.6
-    $ pyenv install 3.8.1
+    $ pyenv install 3.5.10
+    $ pyenv install 3.6.12
+    $ pyenv install 3.7.9
+    $ pyenv install 3.8.6
 
 Specify the Python versions you want to test with::
 
-    $ pyenv local 3.5.9 3.6.10 3.7.6 3.8.1
+    $ pyenv local 3.5.10 3.6.12 3.7.9 3.8.6
 
 Run tests::
 
