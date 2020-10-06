@@ -1,6 +1,12 @@
 `Release history`_
 ##################
 
+2.2.0 - 06-10-2020
+==================
+
+* Add Django 3.0 and 3.1 support
+* Add django-ipware 3 support
+
 2.1.1 - 10-01-2020
 ==================
 * Fix Travis CI deployment to PyPi
