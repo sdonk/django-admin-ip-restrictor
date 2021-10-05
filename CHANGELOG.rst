@@ -1,6 +1,12 @@
 `Release history`_
 ##################
 
+2.2.1 - 10-05-2021
+==================
+* Remove install_requires for django < 3
+* Remove install_requires for python_version < 3.6.0
+
+
 2.2.0 - 06-10-2020
 ==================
 
