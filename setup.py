@@ -16,12 +16,12 @@ install_requires = [
 ]
 
 test_requires = [
-    'coverage==5.0.2',
-    'pytest==5.3.2',
-    'pytest-cov==2.8.1',
-    'pytest-django==3.7.0',
-    'pytest-sugar==0.9.2',
-    'tox==3.14.3',
+    'coverage==6.2',
+    'pytest==6.2.5',
+    'pytest-cov==3.0.0',
+    'pytest-django==4.5.2',
+    'pytest-sugar==0.9.4',
+    'tox==3.24.4',
 ]
 
 setup(
@@ -49,6 +49,7 @@ setup(
         'Framework :: Django :: 2.2',
         'Framework :: Django :: 3.0',
         'Framework :: Django :: 3.1',
+        'Framework :: Django :: 3.2',
         'Intended Audience :: Developers',
         'License :: OSI Approved :: MIT License',
         'Operating System :: OS Independent',
@@ -58,6 +59,8 @@ setup(
         'Programming Language :: Python :: 3.6',
         'Programming Language :: Python :: 3.7',
         'Programming Language :: Python :: 3.8',
+        'Programming Language :: Python :: 3.9',
+        'Programming Language :: Python :: 3.10',
         'Programming Language :: Python :: 3 :: Only',
         'Topic :: Software Development :: Libraries :: Python Modules',
     ],

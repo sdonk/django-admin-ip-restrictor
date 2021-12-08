@@ -1,6 +1,12 @@
 `Release history`_
 ##################
 
+2.2.1 - Not Released
+====================
+
+* Test compatibility with django 3.2
+* Test compatibility with python 3.9 & 3.10
+
 2.2.0 - 06-10-2020
 ==================
 
