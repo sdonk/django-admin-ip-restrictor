@@ -1,0 +1,89 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "django-admin-ip-restrictor"
+version = "2.2.0"
+description = "A Django middleware to restrict incoming IPs to admin panel"
+readme = "README.rst"
+license = { text = "MIT License" }
+requires-python = ">=3.9"
+dependencies = [
+    "django>=4.0",
+    "django-ipware>=7",
+]
+classifiers = [
+    "Development Status :: 5 - Production/Stable",
+    "Environment :: Web Environment",
+    "Framework :: Django",
+    "Framework :: Django :: 4.0",
+    "Framework :: Django :: 4.1",
+    "Framework :: Django :: 4.2",
+    "Framework :: Django :: 5.0",
+    "Framework :: Django :: 6.0",
+    "Intended Audience :: Developers",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+    "Programming Language :: Python",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+    "Programming Language :: Python :: 3 :: Only",
+    "Topic :: Software Development :: Libraries :: Python Modules",
+]
+
+[project.optional-dependencies]
+tests = [
+    "coverage",
+    "pytest",
+    "pytest-cov",
+    "pytest-django",
+    "pytest-sugar",
+]
+
+[project.urls]
+Homepage = "https://github.com/sdonk/django-admin-ip-restrictor/"
+
+[dependency-groups]
+dev = [
+    "coverage",
+    "pytest",
+    "pytest-cov",
+    "pytest-django",
+    "pytest-sugar",
+    "ruff",
+    "tox>=4.30.3",
+    "tox-uv>=1.28.1",
+    "ty",
+]
+
+[tool.hatch.build.targets.wheel]
+packages = ["admin_ip_restrictor"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+norecursedirs = [".tox"]
+
+[tool.ruff]
+line-length = 120
+exclude = [
+    ".tox",
+    ".git",
+    "*/migrations/*",
+    "*/static/CACHE/*",
+    "node_modules",
+]
+
+[tool.ruff.lint]
+select = ["E", "F", "W", "I", "UP", "B", "C4", "SIM"]
+ignore = []
+
+[tool.ruff.lint.isort]
+known-first-party = ["admin_ip_restrictor"]
+
+[tool.ty.environment]
+python-version = "3.12"
