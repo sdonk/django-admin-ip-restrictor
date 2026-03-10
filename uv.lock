@@ -407,8 +407,8 @@ dev = [
 [package.metadata]
 requires-dist = [
     { name = "coverage", marker = "extra == 'tests'" },
-    { name = "django", specifier = ">=3.2" },
-    { name = "django-ipware", specifier = ">=3" },
+    { name = "django", specifier = ">=4.0" },
+    { name = "django-ipware", specifier = ">=7" },
     { name = "pytest", marker = "extra == 'tests'" },
     { name = "pytest-cov", marker = "extra == 'tests'" },
     { name = "pytest-django", marker = "extra == 'tests'" },
