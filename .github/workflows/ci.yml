@@ -1,0 +1,72 @@
+name: CI
+
+on:
+  push:
+    branches: [master]
+  pull_request:
+
+jobs:
+  test:
+    name: py${{ matrix.python-version }} / django${{ matrix.django-version }}
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - { python-version: "3.9",  tox-env: "py39-django40" }
+          - { python-version: "3.10", tox-env: "py310-django40" }
+          - { python-version: "3.11", tox-env: "py311-django40" }
+          - { python-version: "3.12", tox-env: "py312-django40" }
+          - { python-version: "3.9",  tox-env: "py39-django41" }
+          - { python-version: "3.10", tox-env: "py310-django41" }
+          - { python-version: "3.11", tox-env: "py311-django41" }
+          - { python-version: "3.12", tox-env: "py312-django41" }
+          - { python-version: "3.9",  tox-env: "py39-django42" }
+          - { python-version: "3.10", tox-env: "py310-django42" }
+          - { python-version: "3.11", tox-env: "py311-django42" }
+          - { python-version: "3.12", tox-env: "py312-django42" }
+          - { python-version: "3.10", tox-env: "py310-django50" }
+          - { python-version: "3.11", tox-env: "py311-django50" }
+          - { python-version: "3.12", tox-env: "py312-django50" }
+          - { python-version: "3.12", tox-env: "py312-django60" }
+          - { python-version: "3.13", tox-env: "py313-django60" }
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install uv
+        uses: astral-sh/setup-uv@v5
+
+      - name: Set up Python ${{ matrix.python-version }}
+        uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+
+      - name: Run tests
+        run: uv run tox -e ${{ matrix.tox-env }}
+
+  lint:
+    name: lint
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install uv
+        uses: astral-sh/setup-uv@v5
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Sync dependencies
+        run: uv sync
+
+      - name: Ruff check
+        run: uv run ruff check .
+
+      - name: Ruff format
+        run: uv run ruff format --check .
+
+      - name: ty check
+        run: uv run ty check .
