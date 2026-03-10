@@ -4,11 +4,11 @@ build-backend = "hatchling.build"
 
 [project]
 name = "django-admin-ip-restrictor"
-version = "2.2.0"
+version = "3.0.0"
 description = "A Django middleware to restrict incoming IPs to admin panel"
 readme = "README.rst"
 license = { text = "MIT License" }
-requires-python = ">=3.9"
+requires-python = ">=3.10"
 dependencies = [
     "django>=4.0",
     "django-ipware>=7",
@@ -27,7 +27,6 @@ classifiers = [
     "Operating System :: OS Independent",
     "Programming Language :: Python",
     "Programming Language :: Python :: 3",
-    "Programming Language :: Python :: 3.9",
     "Programming Language :: Python :: 3.10",
     "Programming Language :: Python :: 3.11",
     "Programming Language :: Python :: 3.12",
